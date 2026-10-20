@@ -23,16 +23,23 @@ echo "[1/6] Packaging Android resources & generating R.java (minSdk=28 Android 9
   -M "$APP_DIR/src/main/AndroidManifest.xml" \
   -S "$APP_DIR/src/main/res" \
   -A "$APP_DIR/src/main/assets" \
-  -I "$TOOLCHAIN_DIR/android-28.jar" \
+  -I "$TOOLCHAIN_DIR/aapt-android.jar" \
   -F "$BUILD_DIR/resources.ap_"
 
 echo "[2/6] Compiling Java sources + generated R.java..."
 find "$APP_DIR/src/main/java" "$BUILD_DIR/gen" -name "*.java" > "$BUILD_DIR/java_sources.txt"
-"$JAVA_BIN" -cp "$TOOLCHAIN_DIR/ecj.jar" org.eclipse.jdt.internal.compiler.batch.Main \
-  -1.7 -nowarn \
-  -bootclasspath "$TOOLCHAIN_DIR/android.jar" \
-  -d "$BUILD_DIR/classes" \
-  @"$BUILD_DIR/java_sources.txt"
+if [ "$HAS_NATIVE_JAVAC" = "1" ]; then
+  "$JAVA_HOME/bin/javac" -source 8 -target 8 -nowarn \
+    -bootclasspath "$TOOLCHAIN_DIR/android.jar" \
+    -d "$BUILD_DIR/classes" \
+    @"$BUILD_DIR/java_sources.txt"
+else
+  "$JAVA_BIN" -cp "$TOOLCHAIN_DIR/ecj.jar" org.eclipse.jdt.internal.compiler.batch.Main \
+    -1.7 -nowarn \
+    -bootclasspath "$TOOLCHAIN_DIR/android.jar" \
+    -d "$BUILD_DIR/classes" \
+    @"$BUILD_DIR/java_sources.txt"
+fi
 
 echo "[3/6] Compiling Kotlin sources with bidirectional Java interop..."
 find "$APP_DIR/src/main/java" "$BUILD_DIR/gen" "$APP_DIR/src/main/kotlin" \( -name "*.java" -o -name "*.kt" \) > "$BUILD_DIR/all_sources.txt"

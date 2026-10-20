@@ -14,10 +14,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Java + Kotlin Native Port Verification Suite
-        run: bash scripts/run-tests.sh
+        run: |
+          if ! bash scripts/run-tests.sh > /tmp/test.log 2>&1; then
+            cat /tmp/test.log
+            echo "::error title=TestFailure::$(tail -n 8 /tmp/test.log | tr '\n' ' ')"
+            exit 1
+          fi
+          cat /tmp/test.log
 
       - name: Build & Sign Android 9+ (minSdk 28) Oprek APK
-        run: bash scripts/build-apk.sh
+        run: |
+          if ! bash scripts/build-apk.sh > /tmp/build.log 2>&1; then
+            cat /tmp/build.log
+            echo "::error title=BuildFailure::$(tail -n 8 /tmp/build.log | tr '\n' ' ')"
+            exit 1
+          fi
+          cat /tmp/build.log
 
       - name: Upload Signed APK Artifact
         uses: actions/upload-artifact@v4
