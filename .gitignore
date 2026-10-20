@@ -1,0 +1,17 @@
+# Python / toolchain (rebuilt, not committed)
+.venv/
+.tools/
+__pycache__/
+*.pyc
+
+# Extracted game data and downloads - never commit
+downloads/
+extracted/
+*.rar
+*.zip
+*.7z
+
+# Android build output
+android/app/build/
+android/.gradle/
+android/build/
