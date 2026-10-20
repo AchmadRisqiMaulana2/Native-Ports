@@ -2,12 +2,10 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-bash "$ROOT_DIR/scripts/setup-toolchain.sh"
-
 TOOLCHAIN_DIR="${TOOLCHAIN_DIR:-/tmp/android-toolchain}"
-VENV_DIR="${VENV_DIR:-/tmp/jdk-venv}"
-export JAVA_HOME="$("$VENV_DIR/bin/python" -c "import jdk4py; print(str(jdk4py.JAVA_HOME))")"
-JAVA_BIN="$JAVA_HOME/bin/java"
+bash "$ROOT_DIR/scripts/setup-toolchain.sh"
+# shellcheck source=/dev/null
+source "$TOOLCHAIN_DIR/env.sh"
 
 APP_DIR="$ROOT_DIR/ports/feeding-frenzy/app"
 WORK_DIR="/tmp/ff-test-build"
@@ -32,6 +30,6 @@ find "$APP_DIR/src/main/java" "$APP_DIR/src/main/kotlin" "$APP_DIR/src/test/kotl
   -d "$WORK_DIR/classes" \
   @"$WORK_DIR/all_sources.txt"
 
-echo "[test] 3/3 Running NativePortVerificationSuite on OpenJDK 21..."
+echo "[test] 3/3 Running NativePortVerificationSuite on OpenJDK..."
 "$JAVA_BIN" -cp "$WORK_DIR/classes:$TOOLCHAIN_DIR/kotlin-compiler/lib/kotlin-stdlib.jar:$TOOLCHAIN_DIR/android.jar" \
   com.risqi.nativeports.feedingfrenzy.NativePortVerificationSuite
