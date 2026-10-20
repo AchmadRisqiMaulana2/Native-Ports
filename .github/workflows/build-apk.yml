@@ -1,0 +1,26 @@
+name: Build Android 9+ Native Port APK
+
+on:
+  push:
+    branches: [ main, "arena/**" ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Java + Kotlin Native Port Verification Suite
+        run: bash scripts/run-tests.sh
+
+      - name: Build & Sign Android 9+ (minSdk 28) Oprek APK
+        run: bash scripts/build-apk.sh
+
+      - name: Upload Signed APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: FeedingFrenzy-Android9Plus-Oprek-APK
+          path: FeedingFrenzy-Android9Plus-Oprek-debug.apk

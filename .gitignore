@@ -1,0 +1,18 @@
+# Build & Gradle outputs
+**/build/
+**/.gradle/
+**/__pycache__/
+*.py[cod]
+local.properties
+*.iml
+.idea/
+.DS_Store
+
+# Temporary & local unpacked dumps (keep repo clean unless explicitly tracked)
+work/
+unpacked_dump/
+*.apk
+*.aab
+*.idsig
+*.keystore
+!ports/feeding-frenzy/debug.keystore

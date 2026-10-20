@@ -1,0 +1,55 @@
+{
+  "engine": "Feeding Frenzy Native Android Port (Java + Kotlin)",
+  "minAndroidApi": 28,
+  "pakFormat": {
+    "magicHex": "0xBAC04AC0",
+    "xorKeyHex": "0xF7",
+    "supportedInputs": [
+      "Feeding_Frenzy_Win_Preinstalled_EN.zip",
+      "main.pak",
+      "FeedingFrenzy.exe"
+    ]
+  },
+  "oprekPresets": [
+    {
+      "id": "vanilla",
+      "name": "Original PopCap 2004",
+      "godMode": false,
+      "speedMultiplier": 1.0,
+      "scaleOverride": 0.0,
+      "alwaysFrenzy": false,
+      "foodMagnetRadius": 0.0,
+      "spawnRateMultiplier": 1.0
+    },
+    {
+      "id": "sultan_oprek",
+      "name": "Sultan Oprek (God Mode + Magnet + Turbo)",
+      "godMode": true,
+      "speedMultiplier": 1.65,
+      "scaleOverride": 0.0,
+      "alwaysFrenzy": true,
+      "foodMagnetRadius": 260.0,
+      "spawnRateMultiplier": 1.6
+    },
+    {
+      "id": "leviathan",
+      "name": "Titan Orca Mode (Raksasa Makan Hiu)",
+      "godMode": true,
+      "speedMultiplier": 1.4,
+      "scaleOverride": 2.35,
+      "alwaysFrenzy": true,
+      "foodMagnetRadius": 320.0,
+      "spawnRateMultiplier": 2.0
+    },
+    {
+      "id": "nightmare",
+      "name": "Hardcore Predator Swarm",
+      "godMode": false,
+      "speedMultiplier": 1.2,
+      "scaleOverride": 0.0,
+      "alwaysFrenzy": false,
+      "foodMagnetRadius": 0.0,
+      "spawnRateMultiplier": 2.1
+    }
+  ]
+}
